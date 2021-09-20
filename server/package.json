@@ -1,0 +1,15 @@
+{
+  "name": "capstone_server",
+  "version": "1.0.0",
+  "description": "node.js server for capstone",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "shin woojin",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
