@@ -7,6 +7,7 @@ const Title = styled.div`
     letter-spacing: 8px;
     text-align:center;
     background-color: #3399ff;
+    border-bottom: 1px solid gray;
 `;
 
 
