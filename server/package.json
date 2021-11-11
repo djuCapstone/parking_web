@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "tsc",
-    "start": "nodemon --exec ts-node dist/www.js",
-    "build": "tsc server.ts"
+    "start": "nodemon server.js"
   },
   "author": "shin woojin",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.1",
+    "mongoose": "^6.0.8",
     "nodemon": "^2.0.12"
   },
   "devDependencies": {

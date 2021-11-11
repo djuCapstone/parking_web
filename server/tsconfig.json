@@ -2,8 +2,9 @@
     "compilerOptions": {
       "target": "ES5",
       "module": "CommonJS",
+      "strict": true,
       "outDir": "./dist"
     },
-    "include": ["*.ts"],
+    "include": ["*.ts", "server.js", "router.js"],
     "exclude": ["node_modules"]
   } 
