@@ -48,17 +48,29 @@ function LoginForm(location) {
 
   // input data 의 변화가 있을 때마다 value 값을 변경해서 useState 해준다
   const handleInputId = (e) => {
-      setInputId(e.target.value)
+    setInputId(e.target.value)
   }
 
   const handleInputPw = (e) => {
-      setInputPw(e.target.value)
+    setInputPw(e.target.value)
   }
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-      console.log('click login')
+    axios.post('/user_inform/onLogin', null, {
+        params: {
+        'user_id': inputId,
+        'user_pw': inputPw
+        }
+    })
+    .then(res => console.log(res))
+    .catch()
   }
+
+  // 회원가입 버튼 클릭 이벤트
+  const onJoin = () => {
+    console.log('click join')
+}
 
   // 페이지 렌더링 후 가장 처음 호출되는 함수
   useEffect(() => {
@@ -81,6 +93,7 @@ function LoginForm(location) {
         onChange={handleInputPw}
       />
       <Button onClick={onClickLogin}>로그인</Button>
+      <Button onClick={onJoin}>회원가입</Button>
     </Container>
   );
 }
