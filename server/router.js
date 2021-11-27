@@ -1,20 +1,31 @@
-const connection =  require("../api/config/mongodb");
+const connection =  require("./config/mongodb");
 const mongoose = require("mongoose");
 
+const UserSchema = new mongoose.Schema({
+  id: String, // 아이디
+  passwd: String, // 비밀번호
+  nick: String, // 닉네임
+  car_size: String, // 차 크기 
+  car_spec: String, // 차 유형
+  live_state: String // 거주지
+});
+
+// const Users = connection.model("User", UserSchema);
 
 const Router = function(app){
-    const UserSchema = new mongoose.Schema({
-        id: String, // 아이디
-        passwd: String, // 비밀번호
-        nick: String, // 닉네임
-        car_size: String, // 차 크기 
-        car_spec: String, // 차 유형
-        live_state: String // 거주지
-    });
+    // const UserSchema = new mongoose.Schema({
+    //     id: String, // 아이디
+    //     passwd: String, // 비밀번호
+    //     nick: String, // 닉네임
+    //     car_size: String, // 차 크기 
+    //     car_spec: String, // 차 유형
+    //     live_state: String // 거주지
+    // });
 
-    const Users =  connection.model("User", UserSchema);
+    // let Users = connection.model("User", UserSchema);
     app.get('/', function(req, res){
         res.send("hello typescript express!");
+        console.log("hello typescript express!");
     });
     
     app.get('/login', function(req, res) {
@@ -34,6 +45,10 @@ const Router = function(app){
           res.send(data);
         });
   });
+
+    app.get('user_inform/onLogin', function(req, res){
+      console.log(res, req);
+    })
 
     app.get('/setuser', function(req, res){
         const testa = new Users({
