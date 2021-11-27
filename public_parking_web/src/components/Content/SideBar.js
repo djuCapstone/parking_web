@@ -63,14 +63,29 @@ const StyledLink = styled(Link)`
     }
 `;
 
+const Logout = () =>{
+    sessionStorage.removeItem('user_id');
+    alert('로그아웃 되었습니다.');
+    document.location.href = '/';
+}
+
+
 function SideBar(){
+    let isLogin = false;
+    if(sessionStorage.getItem('user_id') !== null){
+        isLogin = true;
+    }
+
     return (
         <BrowserRouter>
         <Sidebar>
             <Search placeholder= '주차장 검색!'></Search>
             <SearchButton>검색</SearchButton>
             <ButtonContainer>
-                <Button><StyledLink to= '/login' >로그인</StyledLink></Button>
+                {isLogin ?
+                <Button onClick={Logout}><StyledLink to= '/logout'>로그아웃</StyledLink></Button>
+                :<Button><StyledLink to= '/login' >로그인</StyledLink></Button>
+                }
                 <Button><StyledLink to= '/board'>커뮤니티</StyledLink></Button>
                 <Switch>
                     <Route path='/login' component={login}/>

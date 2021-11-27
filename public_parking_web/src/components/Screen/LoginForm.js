@@ -57,14 +57,30 @@ function LoginForm(location) {
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-    axios.post('/user_inform/onLogin', null, {
-        params: {
-        'user_id': inputId,
-        'user_pw': inputPw
-        }
-    })
-    .then(res => console.log(res))
-    .catch()
+    
+    if(inputId !== '' && inputPw !== ''){
+        axios.post('/api/user_inform/onLogin', null, {
+            params: {
+            'user_id': inputId,
+            'user_pw': inputPw
+            }
+        })
+        .then(res => {
+          console.log(res.data);
+          if(res.data.id === inputId) {
+            // id, pw 모두 일치 userId = userId1, msg = undefined
+            alert("환영합니다 " +res.data.nick+"님!");
+            sessionStorage.setItem('user_id', inputId);
+            document.location.href = '/'
+          }
+          
+        })
+        .catch()
+        console.log("click button", inputId);
+      }
+      else {
+        alert('id/pw를 입력해주세요.');
+      }
   }
 
   // 회원가입 버튼 클릭 이벤트
@@ -72,14 +88,6 @@ function LoginForm(location) {
     console.log('click join')
 }
 
-  // 페이지 렌더링 후 가장 처음 호출되는 함수
-  useEffect(() => {
-      axios.get('/user_inform/login')
-      .then(res => console.log(res))
-      .catch()
-  },
-  // 페이지 호출 후 처음 한번만 호출될 수 있도록 [] 추가
-  [])
   console.log(location);
   return (
     <Container>

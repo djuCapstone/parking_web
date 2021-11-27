@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import MapContainer from './components/Map/MapContainer';
 import { MainTitle, SideBar } from './components/Content';
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   width: 100%;
@@ -21,8 +21,9 @@ const ContentContainer = styled.div`
 
 
 function App() {
+
   const callApi = async() => {
-    axios.get('/api').then((res) => console.log(res.data.test));
+    axios.get('/api').then((res) => console.log(res.data));
   }
 
   useEffect(() => {
