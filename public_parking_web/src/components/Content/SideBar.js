@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 import styled from 'styled-components';
 import { BrowserRouter, BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import login from '../Screen/LoginForm';
+import join from '../Screen/JoinForm';
 import board from '../Screen/Board';
 import { useLocation } from 'react-router-dom';   
 
@@ -75,21 +76,24 @@ function SideBar(){
     if(sessionStorage.getItem('user_id') !== null){
         isLogin = true;
     }
-
     return (
         <BrowserRouter>
         <Sidebar>
-            <Search placeholder= '주차장 검색!'></Search>
-            <SearchButton>검색</SearchButton>
+            {/* <Search placeholder= '주차장 검색!'></Search>
+            <SearchButton>검색</SearchButton> */}
             <ButtonContainer>
                 {isLogin ?
                 <Button onClick={Logout}><StyledLink to= '/logout'>로그아웃</StyledLink></Button>
                 :<Button><StyledLink to= '/login' >로그인</StyledLink></Button>
                 }
+                {isLogin ? 
+                <></>
+                :<Button><StyledLink to= '/join' >회원가입</StyledLink></Button>}
                 <Button><StyledLink to= '/board'>커뮤니티</StyledLink></Button>
                 <Switch>
                     <Route path='/login' component={login}/>
                     <Route path='/board' component={board}/>
+                    <Route path='/join' component={join}/>
                 </Switch>
             </ButtonContainer>
         </Sidebar>    

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import axios from 'axios';
 
@@ -57,8 +57,7 @@ function LoginForm(location) {
 
   // login 버튼 클릭 이벤트
   const onClickLogin = () => {
-    
-    if(inputId !== '' && inputPw !== ''){
+      if(inputId !== '' && inputPw !== ''){
         axios.post('/api/user_inform/onLogin', null, {
             params: {
             'user_id': inputId,
@@ -66,29 +65,27 @@ function LoginForm(location) {
             }
         })
         .then(res => {
-          console.log(res.data);
           if(res.data.id === inputId) {
             // id, pw 모두 일치 userId = userId1, msg = undefined
             alert("환영합니다 " +res.data.nick+"님!");
             sessionStorage.setItem('user_id', inputId);
+            sessionStorage.setItem('user_nick',res.data.nick);
             document.location.href = '/'
           }
-          
+          if(res.data === "login failed"){
+            alert('ID/PW를 확인해주세요.');
+          }
         })
         .catch()
-        console.log("click button", inputId);
       }
       else {
-        alert('id/pw를 입력해주세요.');
+        alert('ID/PW를 입력해주세요.');
       }
   }
 
-  // 회원가입 버튼 클릭 이벤트
-  const onJoin = () => {
-    console.log('click join')
-}
 
   console.log(location);
+  
   return (
     <Container>
       <Input id="id" name="id" placeholder="아이디를 입력해주세요" value={inputId} onChange={handleInputId}/>
@@ -101,7 +98,6 @@ function LoginForm(location) {
         onChange={handleInputPw}
       />
       <Button onClick={onClickLogin}>로그인</Button>
-      <Button onClick={onJoin}>회원가입</Button>
     </Container>
   );
 }
