@@ -3,6 +3,7 @@ const router2 = express.Router();
 const mongoose = require("mongoose");
 const connection =  require("../config/mongodb");
 const fs = require('fs');
+const { Console } = require('console');
 
 // MongoDB 스키마 생성
 const UserSchema = new mongoose.Schema({
@@ -14,7 +15,15 @@ const UserSchema = new mongoose.Schema({
   live_state: String // 거주지
 });
 
+const BoardSchema = new mongoose.Schema({
+  title: String, 
+  parkingTitle: String, 
+  nick: String, 
+  content: String
+});
+
 const Users = connection.model("User", UserSchema);
+const Boards = connection.model("Board", BoardSchema);
 
 // 주차장 정보 json 읽어서 클러스터러화
 let clusterMakers = []
@@ -66,35 +75,54 @@ router2.post('/user_inform/onLogin', function(req, res){
       }
     }
     else{
-      console.log("로그인 실패")
+      console.log("로그인 실패");
+      res.send("login failed");
     }
   })
 });
 
-
-// router2.get('/getMapMarker', function(req, res){
-//   connection.db.collection("Maps").find({}).toArray(function(err, data){
-//     res.send(data);
-//   })
-// });
-
-router2.get('/setuser', function(req, res){
-    const testa = new Users({
-        id: "test1", // 아이디
-        passwd: "test1", // 비밀번호
-        nick: "테스트", // 닉네임
-        car_size: "중형", // 차 크기 
-        car_spec: "SUV", // 차 유형
-        live_state: "서울" // 거주지
-      });
-      testa.save();
-    // if(!testa.id === connection.db.collection("users").findOne({id: testa.id}, function(err, data){data.id})){
-    //   testa.save();
-    // }
-    // else {
-    //   console.log("이미 등록됨 ");
-    // }
-    res.send("test");
+router2.post('/user_join', function(req, res){
+  const user_id = req.query.user_id;
+  const user_pw = req.query.user_pw;
+  const user_nick = req.query.user_nick;
+  const user_carsize = req.query.user_carsize;
+  const user_carspec = req.query.user_carspec;
+  const user_livestate = req.query.user_livestate;
+  const setUser = new Users({
+    id: user_id, // 아이디
+    passwd: user_pw, // 비밀번호
+    nick: user_nick, // 닉네임
+    car_size: user_carsize, // 차 크기 
+    car_spec: user_carspec, // 차 유형
+    live_state: user_livestate // 거주지
+  });
+  setUser.save();
 });
+
+router2.post('/BoardInsert', function(req, res){
+  console.log(req.query);
+  const title = req.query.title;
+  const parkingTitle = req.query.parkingTitle;
+  const nick = req.query.nick;
+  const content = req.query.content;
+
+  const setBoard = new Boards({
+    title: title, 
+    parkingTitle: parkingTitle, 
+    nick: nick, 
+    content: content
+  });
+  console.log(setBoard);
+  setBoard.save();
+  res.send("success");
+});
+
+router2.get('/BoardLoad', function(req, res){
+  connection.db.collection("boards").find({}).toArray(function(err, data){
+    res.send(data);
+  });
+
+})
+
 
 module.exports = router2

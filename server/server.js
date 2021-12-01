@@ -2,7 +2,6 @@ const express = require("express");
 const connection =  require("./config/mongodb");
 const http = require("http");
 const router = require("./router");
-const bodyParser = require("body-parser");
 const port = 3001;
 const api = require('./routes/index')
 const cors = require('cors');
